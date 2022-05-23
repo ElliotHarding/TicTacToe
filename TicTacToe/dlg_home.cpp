@@ -36,9 +36,15 @@ void DLG_Home::mousePressEvent(QMouseEvent* mouseEvent)
             return;
         }
 
-        //Spawn new tile
-        m_tiles[x][y] = new Tile(this, "X", QPoint(x,y));
+        placeTile(x, y);
     }
+}
+
+void DLG_Home::placeTile(int x, int y)
+{
+    //Spawn new tile
+    m_tiles[x][y] = new Tile(this, m_bSpawnX ? "X" : "O", QPoint(x,y));
+    m_bSpawnX = !m_bSpawnX;
 }
 
 void DLG_Home::resetBoard()
@@ -46,6 +52,8 @@ void DLG_Home::resetBoard()
     deleteTiles();
 
     m_tiles = QVector<QVector<Tile*>>(3, QVector<Tile*>(3, nullptr));
+
+    m_bSpawnX = true;
 }
 
 void DLG_Home::deleteTiles()
@@ -59,3 +67,8 @@ void DLG_Home::deleteTiles()
     }
 }
 
+
+void DLG_Home::on_btn_reset_clicked()
+{
+    resetBoard();
+}

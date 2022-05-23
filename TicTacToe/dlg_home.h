@@ -25,6 +25,11 @@ private:
     Ui::DLG_Home *ui;
     QVector<QVector<Tile*>> m_tiles;
 
+    ///Game control
+    bool m_bSpawnX;
+    void placeTile(int x, int y);
+
+    ///Reset/start
     void resetBoard();
     void deleteTiles();
 };
