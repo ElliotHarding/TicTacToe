@@ -26,5 +26,6 @@ void Tile::paintEvent(QPaintEvent*)
 
 void Tile::setPosition(const QPoint& position)
 {
-    setGeometry(Settings::BoardTopLeft.x() + position.x() * Settings::TileSize, Settings::BoardTopLeft.y() + position.y() * Settings::TileSize, Settings::TileSize, Settings::TileSize);
+    setGeometry(Settings::BoardRect.left() + position.x() * Settings::TileSize, Settings::BoardRect.top() + position.y() * Settings::TileSize, Settings::TileSize, Settings::TileSize);
+    show();
 }

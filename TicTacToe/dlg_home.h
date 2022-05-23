@@ -17,9 +17,15 @@ public:
     DLG_Home(QWidget *parent = nullptr);
     ~DLG_Home();
 
-private:
-    Ui::DLG_Home *ui;
+protected:
+    void mousePressEvent(QMouseEvent* mouseEvent) override;
 
+private:
+    ///UI
+    Ui::DLG_Home *ui;
     QVector<QVector<Tile*>> m_tiles;
+
+    void resetBoard();
+    void deleteTiles();
 };
 #endif // DLG_HOME_H
