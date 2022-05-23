@@ -20,6 +20,9 @@ public:
 protected:
     void mousePressEvent(QMouseEvent* mouseEvent) override;
 
+private slots:
+    void on_btn_reset_clicked();
+
 private:
     ///UI
     Ui::DLG_Home *ui;
