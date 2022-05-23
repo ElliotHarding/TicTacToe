@@ -13,8 +13,6 @@ public:
     QString value() const;
     bool hasValue() const;
 
-    void hide();
-
 protected:
     void paintEvent(QPaintEvent* paintEvent) override;
 

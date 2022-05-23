@@ -8,13 +8,11 @@ Tile::Tile(QWidget *parent, const QPoint& position) :
     m_value("")
 {
     setGeometry(Settings::BoardRect.left() + position.x() * Settings::TileSize, Settings::BoardRect.top() + position.y() * Settings::TileSize, Settings::TileSize, Settings::TileSize);
-    hide();
 }
 
 void Tile::setValue(const QString &value)
 {
     m_value = value;
-    show();
 }
 
 QString Tile::value() const
@@ -25,12 +23,6 @@ QString Tile::value() const
 bool Tile::hasValue() const
 {
     return !m_value.isEmpty();
-}
-
-void Tile::hide()
-{
-    m_value = "";
-    QWidget::hide();
 }
 
 void Tile::paintEvent(QPaintEvent*)

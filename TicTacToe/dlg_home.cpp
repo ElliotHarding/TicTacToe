@@ -61,7 +61,7 @@ void DLG_Home::resetBoard()
     {
         for(int y = 0; y < m_tiles[x].size(); y++)
         {
-            m_tiles[x][y]->hide();
+            m_tiles[x][y]->setValue("");
         }
     }
 }
