@@ -1,6 +1,8 @@
 #ifndef DLG_HOME_H
 #define DLG_HOME_H
 
+#include "tile.h"
+
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -17,5 +19,7 @@ public:
 
 private:
     Ui::DLG_Home *ui;
+
+    QVector<QVector<Tile*>> m_tiles;
 };
 #endif // DLG_HOME_H
