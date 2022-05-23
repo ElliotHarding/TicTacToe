@@ -31,6 +31,7 @@ private:
     ///Game control
     bool m_bSpawnX;
     void placeTile(int x, int y);
+    void checkWinner();
 
     ///Reset/start
     void resetBoard();

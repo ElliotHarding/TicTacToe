@@ -45,6 +45,12 @@ void DLG_Home::placeTile(int x, int y)
     //Spawn new tile
     m_tiles[x][y] = new Tile(this, m_bSpawnX ? "X" : "O", QPoint(x,y));
     m_bSpawnX = !m_bSpawnX;
+    checkWinner();
+}
+
+void DLG_Home::checkWinner()
+{
+
 }
 
 void DLG_Home::resetBoard()
