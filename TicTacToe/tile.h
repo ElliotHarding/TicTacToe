@@ -7,15 +7,19 @@ class Tile : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Tile(QWidget *parent, const QString value, const QPoint& position);
+    explicit Tile(QWidget *parent, const QPoint& position);
+
+    void setValue(const QString& value);
+    QString value() const;
+    bool hasValue() const;
+
+    void hide();
 
 protected:
     void paintEvent(QPaintEvent* paintEvent) override;
 
 private:
     QString m_value;
-
-    void setPosition(const QPoint& position);
 
 };
 

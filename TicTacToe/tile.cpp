@@ -3,11 +3,34 @@
 
 #include <QPainter>
 
-Tile::Tile(QWidget *parent, const QString value, const QPoint& position) :
+Tile::Tile(QWidget *parent, const QPoint& position) :
     QWidget(parent),
-    m_value(value)
+    m_value("")
 {
-    setPosition(position);
+    setGeometry(Settings::BoardRect.left() + position.x() * Settings::TileSize, Settings::BoardRect.top() + position.y() * Settings::TileSize, Settings::TileSize, Settings::TileSize);
+    hide();
+}
+
+void Tile::setValue(const QString &value)
+{
+    m_value = value;
+    show();
+}
+
+QString Tile::value() const
+{
+    return m_value;
+}
+
+bool Tile::hasValue() const
+{
+    return !m_value.isEmpty();
+}
+
+void Tile::hide()
+{
+    m_value = "";
+    QWidget::hide();
 }
 
 void Tile::paintEvent(QPaintEvent*)
@@ -22,10 +45,4 @@ void Tile::paintEvent(QPaintEvent*)
 
     //Draw value text
     painter.drawText(QPoint(Settings::TileSize/2 - textWidth/2, Settings::TileSize/2 + Settings::TileTextFontMetrics.height()/4), m_value);
-}
-
-void Tile::setPosition(const QPoint& position)
-{
-    setGeometry(Settings::BoardRect.left() + position.x() * Settings::TileSize, Settings::BoardRect.top() + position.y() * Settings::TileSize, Settings::TileSize, Settings::TileSize);
-    show();
 }

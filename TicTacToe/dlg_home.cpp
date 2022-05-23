@@ -8,8 +8,9 @@
 DLG_Home::DLG_Home(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::DLG_Home)
+    , m_bSpawnX(true)
 {
-    resetBoard();
+    createTiles();
     ui->setupUi(this);
 }
 
@@ -31,7 +32,7 @@ void DLG_Home::mousePressEvent(QMouseEvent* mouseEvent)
         const int y = floor(yOffset/100);
 
         //Check if tile already exists in location
-        if(m_tiles[x][y] != nullptr)
+        if(m_tiles[x][y]->hasValue())
         {
             return;
         }
@@ -43,7 +44,7 @@ void DLG_Home::mousePressEvent(QMouseEvent* mouseEvent)
 void DLG_Home::placeTile(int x, int y)
 {
     //Spawn new tile
-    m_tiles[x][y] = new Tile(this, m_bSpawnX ? "X" : "O", QPoint(x,y));
+    m_tiles[x][y]->setValue(m_bSpawnX ? "X" : "O");
     m_bSpawnX = !m_bSpawnX;
     checkWinner(x, y);
 }
@@ -55,11 +56,14 @@ void DLG_Home::checkWinner(int xLast, int yLast)
 
 void DLG_Home::resetBoard()
 {
-    deleteTiles();
-
-    m_tiles = QVector<QVector<Tile*>>(3, QVector<Tile*>(3, nullptr));
-
     m_bSpawnX = true;
+    for(int x = 0; x < m_tiles.size(); x++)
+    {
+        for(int y = 0; y < m_tiles[x].size(); y++)
+        {
+            m_tiles[x][y]->hide();
+        }
+    }
 }
 
 void DLG_Home::deleteTiles()
@@ -69,6 +73,18 @@ void DLG_Home::deleteTiles()
         for(int y = 0; y < m_tiles[x].size(); y++)
         {
             delete m_tiles[x][y];
+        }
+    }
+}
+
+void DLG_Home::createTiles()
+{
+    for(int x = 0; x < 3; x++)
+    {
+        m_tiles.push_back(QVector<Tile*>());
+        for(int y = 0; y < 3; y++)
+        {
+            m_tiles[x].push_back(new Tile(this, QPoint(x,y)));
         }
     }
 }

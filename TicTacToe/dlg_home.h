@@ -36,5 +36,6 @@ private:
     ///Reset/start
     void resetBoard();
     void deleteTiles();
+    void createTiles();
 };
 #endif // DLG_HOME_H
