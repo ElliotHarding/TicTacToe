@@ -13,6 +13,7 @@ Tile::Tile(QWidget *parent, const QPoint& position) :
 void Tile::setValue(const QString &value)
 {
     m_value = value;
+    update();
 }
 
 QString Tile::value() const

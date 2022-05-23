@@ -4,14 +4,15 @@
 
 #include <QMouseEvent>
 #include <math.h>
+#include <QDebug>
 
 DLG_Home::DLG_Home(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::DLG_Home)
     , m_bSpawnX(true)
 {
-    createTiles();
     ui->setupUi(this);
+    createTiles();
 }
 
 DLG_Home::~DLG_Home()
