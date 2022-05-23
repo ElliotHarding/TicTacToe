@@ -8,7 +8,7 @@
 
 namespace Settings
 {
-const QPoint BoardTopLeft = QPoint(0,0);
+const QPoint BoardTopLeft = QPoint(40,110);
 
 const int TileSize = 100;
 
