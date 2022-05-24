@@ -78,7 +78,7 @@ void DLG_Home::placeTile(const int& x, const int& y)
 void DLG_Home::checkWinner(const int& xLast, const int& yLast)
 {
     //Check col
-    if(m_tiles[xLast][0] == m_tiles[xLast][1] && m_tiles[xLast][0] == m_tiles[xLast][2])
+    if(m_tiles[xLast][0]->value() == m_tiles[xLast][1]->value() && m_tiles[xLast][0]->value() == m_tiles[xLast][2]->value())
     {
         m_tiles[xLast][0]->setWin();
         m_tiles[xLast][1]->setWin();
@@ -88,7 +88,7 @@ void DLG_Home::checkWinner(const int& xLast, const int& yLast)
     }
 
     //Check row
-    if(m_tiles[0][yLast] == m_tiles[1][yLast] && m_tiles[0][yLast] == m_tiles[2][yLast])
+    if(m_tiles[0][yLast]->value() == m_tiles[1][yLast]->value() && m_tiles[0][yLast]->value() == m_tiles[2][yLast]->value())
     {
         m_tiles[0][yLast]->setWin();
         m_tiles[1][yLast]->setWin();
@@ -100,7 +100,7 @@ void DLG_Home::checkWinner(const int& xLast, const int& yLast)
     //top left to bottom right diagonal
     if(xLast == yLast)
     {
-        if(m_tiles[0][0] == m_tiles[1][1] && m_tiles[0][0] == m_tiles[2][2])
+        if(m_tiles[0][0]->value() == m_tiles[1][1]->value() && m_tiles[0][0]->value() == m_tiles[2][2]->value())
         {
             m_tiles[0][0]->setWin();
             m_tiles[1][1]->setWin();
@@ -113,7 +113,7 @@ void DLG_Home::checkWinner(const int& xLast, const int& yLast)
     //bottom left to top right diagonal
     if(xLast + yLast == Settings::BoardColRows-1)
     {
-        if(m_tiles[0][2] == m_tiles[1][1] && m_tiles[2][0] == m_tiles[1][1])
+        if(m_tiles[0][2]->value() == m_tiles[1][1]->value() && m_tiles[2][0]->value() == m_tiles[1][1]->value())
         {
             m_tiles[0][2]->setWin();
             m_tiles[1][1]->setWin();
