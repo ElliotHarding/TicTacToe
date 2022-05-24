@@ -1,6 +1,8 @@
 #include "ai.h"
 #include "settings.h"
 
+#include <QDebug>
+
 bool checkWinner(const QVector<QVector<QChar>>& board, const int& xLast, const int& yLast)
 {
     //Check col
@@ -36,7 +38,7 @@ bool checkWinner(const QVector<QVector<QChar>>& board, const int& xLast, const i
     return false;
 }
 
-void gameStateScore(const QVector<QVector<QChar>>& board, QVector<QVector<QChar>>& moveBoardMem, float& score, const int& depth, const QChar& aiLetter, const QChar& playerLetter, const QChar& turnLetter)
+void gameStateScore(const QVector<QVector<QChar>>& board, float& score, const int& depth, const QChar& aiLetter, const QChar& playerLetter, const QChar& turnLetter)
 {
     for(int x = 0; x < Settings::BoardColRows; x++)
     {
@@ -44,10 +46,10 @@ void gameStateScore(const QVector<QVector<QChar>>& board, QVector<QVector<QChar>
         {
             if(board[x][y] == Settings::TileTextNull)
             {
-                moveBoardMem = board;
-                moveBoardMem[x][y] = turnLetter;
+                QVector<QVector<QChar>> moveBoard = board;
+                moveBoard[x][y] = turnLetter;
 
-                if(checkWinner(moveBoardMem, x, y))
+                if(checkWinner(moveBoard, x, y))
                 {
                     score += (turnLetter == aiLetter ? 1 : -1) * 1/depth;
                     return;
@@ -56,7 +58,7 @@ void gameStateScore(const QVector<QVector<QChar>>& board, QVector<QVector<QChar>
                 if(depth == 1)
                     return;
 
-                gameStateScore(moveBoardMem, moveBoardMem, score, depth-1, aiLetter, playerLetter, turnLetter == aiLetter ? playerLetter : aiLetter);
+                gameStateScore(moveBoard, score, depth-1, aiLetter, playerLetter, turnLetter == aiLetter ? playerLetter : aiLetter);
             }
         }
     }
@@ -88,7 +90,7 @@ QPoint AI::getBestMove(const QVector<QVector<QChar>>& board, const QChar& aiLett
                 }
                 else
                 {
-                    gameStateScore(moveBoardMem, moveBoardMem, score, 5, aiLetter, playerLetter, playerLetter);
+                    gameStateScore(moveBoardMem, score, 5, aiLetter, playerLetter, playerLetter);
                 }
 
                 if(score > highScore)
