@@ -2,6 +2,7 @@
 #define DLG_HOME_H
 
 #include "tile.h"
+#include "ai.h"
 
 #include <QMainWindow>
 
@@ -29,6 +30,7 @@ private:
     QVector<QVector<Tile*>> m_tiles;
 
     ///Game control
+    int m_numMoves;
     bool m_bSpawnX;
     bool m_bGameOver;
     void placeTile(const int& x, const int& y);
@@ -38,5 +40,8 @@ private:
     void resetBoard();
     void deleteTiles();
     void createTiles();
+
+    ///AI
+    AI m_ai;
 };
 #endif // DLG_HOME_H

@@ -17,7 +17,7 @@ void Tile::setValue(const QChar &value)
     update();
 }
 
-QString Tile::value() const
+QChar Tile::value() const
 {
     return m_value;
 }

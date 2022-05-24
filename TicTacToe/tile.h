@@ -10,7 +10,7 @@ public:
     explicit Tile(QWidget *parent, const QPoint& position);
 
     void setValue(const QChar& value);
-    QString value() const;
+    QChar value() const;
     bool hasValue() const;
 
     void reset();
