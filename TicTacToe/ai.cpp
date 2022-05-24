@@ -51,7 +51,7 @@ void gameStateScore(const QVector<QVector<QChar>>& board, float& score, const in
 
                 if(checkWinner(moveBoard, x, y))
                 {
-                    score += (turnLetter == aiLetter ? 1 : -1) * 1/depth;
+                    score += (turnLetter == aiLetter ? 1 : -1) * depth/10;
                     return;
                 }
 
@@ -83,10 +83,10 @@ QPoint AI::getBestMove(const QVector<QVector<QChar>>& board, const QChar& aiLett
                 moveBoardMem = board;
                 moveBoardMem[x][y] = aiLetter;
 
-                float score;
+                float score = 0;
                 if(checkWinner(moveBoardMem, x, y))
                 {
-                    score = 1;
+                    score = 5;
                 }
                 else
                 {
