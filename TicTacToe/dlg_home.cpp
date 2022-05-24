@@ -89,7 +89,7 @@ void DLG_Home::checkWinner(const int& xLast, const int& yLast)
     }
 
     //bottom left to top right diagonal
-    if(xLast + yLast == Settings::BoardIndexColRows)
+    if(xLast + yLast == Settings::BoardColRows-1)
     {
         if(m_tiles[0][2]->value() == m_tiles[1][1]->value() && m_tiles[2][0]->value() == m_tiles[1][1]->value())
         {
