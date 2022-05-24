@@ -5,12 +5,13 @@
 
 Tile::Tile(QWidget *parent, const QPoint& position) :
     QWidget(parent),
-    m_value("")
+    m_value(Settings::TileTextNull),
+    m_textColor(Settings::TileTextColor)
 {
     setGeometry(Settings::BoardRect.left() + position.x() * Settings::TileSize, Settings::BoardRect.top() + position.y() * Settings::TileSize, Settings::TileSize, Settings::TileSize);
 }
 
-void Tile::setValue(const QString &value)
+void Tile::setValue(const QChar &value)
 {
     m_value = value;
     update();
@@ -23,7 +24,19 @@ QString Tile::value() const
 
 bool Tile::hasValue() const
 {
-    return !m_value.isEmpty();
+    return m_value != Settings::TileTextNull;
+}
+
+void Tile::reset()
+{
+    m_textColor = Settings::TileTextColor;
+    setValue(Settings::TileTextNull);
+}
+
+void Tile::setWin()
+{
+    m_textColor = Settings::TileWinTextColor;
+    update();
 }
 
 void Tile::paintEvent(QPaintEvent*)
@@ -32,7 +45,7 @@ void Tile::paintEvent(QPaintEvent*)
     painter.setRenderHint(QPainter::Antialiasing);
 
     //Prep value text drawing
-    painter.setPen(Settings::TileTextColor);
+    painter.setPen(m_textColor);
     painter.setFont(Settings::TileTextFont);
     const float textWidth = Settings::TileTextFontMetrics.horizontalAdvance(m_value);
 

@@ -42,17 +42,57 @@ void DLG_Home::mousePressEvent(QMouseEvent* mouseEvent)
     }
 }
 
-void DLG_Home::placeTile(int x, int y)
+void DLG_Home::placeTile(const int& x, const int& y)
 {
     //Spawn new tile
-    m_tiles[x][y]->setValue(m_bSpawnX ? "X" : "O");
+    m_tiles[x][y]->setValue(m_bSpawnX ? Settings::TileTextX : Settings::TileTextO);
     m_bSpawnX = !m_bSpawnX;
     checkWinner(x, y);
 }
 
-void DLG_Home::checkWinner(int xLast, int yLast)
+void DLG_Home::checkWinner(const int& xLast, const int& yLast)
 {
+    //Check col
+    if(m_tiles[xLast][0]->value() == m_tiles[xLast][1]->value() && m_tiles[xLast][0]->value() == m_tiles[xLast][2]->value())
+    {
+        m_tiles[xLast][0]->setWin();
+        m_tiles[xLast][1]->setWin();
+        m_tiles[xLast][2]->setWin();
+        return;
+    }
 
+    //Check row
+    if(m_tiles[0][yLast]->value() == m_tiles[1][yLast]->value() && m_tiles[0][yLast]->value() == m_tiles[2][yLast]->value())
+    {
+        m_tiles[0][yLast]->setWin();
+        m_tiles[1][yLast]->setWin();
+        m_tiles[2][yLast]->setWin();
+        return;
+    }
+
+    //top left to bottom right diagonal
+    if(xLast == yLast)
+    {
+        if(m_tiles[0][0]->value() == m_tiles[1][1]->value() && m_tiles[0][0]->value() == m_tiles[2][2]->value())
+        {
+            m_tiles[0][0]->setWin();
+            m_tiles[1][1]->setWin();
+            m_tiles[2][2]->setWin();
+            return;
+        }
+    }
+
+    //bottom left to top right diagonal
+    if(xLast + yLast == Settings::BoardIndexColRows)
+    {
+        if(m_tiles[0][2]->value() == m_tiles[1][1]->value() && m_tiles[2][0]->value() == m_tiles[1][1]->value())
+        {
+            m_tiles[0][2]->setWin();
+            m_tiles[1][1]->setWin();
+            m_tiles[2][0]->setWin();
+            return;
+        }
+    }
 }
 
 void DLG_Home::resetBoard()
@@ -62,7 +102,7 @@ void DLG_Home::resetBoard()
     {
         for(int y = 0; y < m_tiles[x].size(); y++)
         {
-            m_tiles[x][y]->setValue("");
+            m_tiles[x][y]->reset();
         }
     }
 }

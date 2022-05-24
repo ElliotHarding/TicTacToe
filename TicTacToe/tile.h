@@ -9,15 +9,20 @@ class Tile : public QWidget
 public:
     explicit Tile(QWidget *parent, const QPoint& position);
 
-    void setValue(const QString& value);
+    void setValue(const QChar& value);
     QString value() const;
     bool hasValue() const;
+
+    void reset();
+
+    void setWin();
 
 protected:
     void paintEvent(QPaintEvent* paintEvent) override;
 
 private:
-    QString m_value;
+    QChar m_value;
+    QColor m_textColor;
 
 };
 

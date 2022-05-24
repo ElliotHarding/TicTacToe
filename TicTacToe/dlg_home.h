@@ -30,8 +30,8 @@ private:
 
     ///Game control
     bool m_bSpawnX;
-    void placeTile(int x, int y);
-    void checkWinner(int xLast, int yLast);
+    void placeTile(const int& x, const int& y);
+    void checkWinner(const int& xLast, const int& yLast);
 
     ///Reset/start
     void resetBoard();
