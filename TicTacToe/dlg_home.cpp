@@ -41,6 +41,22 @@ void DLG_Home::mousePressEvent(QMouseEvent* mouseEvent)
             }
 
             placeTile(x, y);
+
+            if(m_bGameOver)
+                return;
+
+            QVector<QVector<QChar>> board;
+            for(int x = 0; x < m_tiles.size(); x++)
+            {
+                board.push_back(QVector<QChar>());
+                for(int y = 0; y < m_tiles[x].size(); y++)
+                {
+                    board[x].push_back(m_tiles[x][y]->value());
+                }
+            }
+
+            QPoint move = m_ai.getBestMove(board, m_bSpawnX ? Settings::TileTextX : Settings::TileTextO, m_bSpawnX ? Settings::TileTextO : Settings::TileTextX);
+            placeTile(move.x(), move.y());
         }
     }
 }
@@ -56,21 +72,6 @@ void DLG_Home::placeTile(const int& x, const int& y)
     if(m_numMoves == Settings::NumTiles)
     {
         m_bGameOver = true;
-    }
-    else
-    {
-        QVector<QVector<QChar>> board;
-        for(int x = 0; x < m_tiles.size(); x++)
-        {
-            board.push_back(QVector<QChar>());
-            for(int y = 0; y < m_tiles[x].size(); y++)
-            {
-                board[x].push_back(m_tiles[x][y]->value());
-            }
-        }
-
-        QPoint move = m_ai.getBestMove(board, m_bSpawnX ? Settings::TileTextX : Settings::TileTextO, m_bSpawnX ? Settings::TileTextO : Settings::TileTextX);
-        placeTile(move.x(), move.y());
     }
 }
 

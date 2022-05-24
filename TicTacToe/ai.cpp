@@ -53,7 +53,7 @@ void gameStateScore(const QVector<QVector<QChar>>& board, QVector<QVector<QChar>
                     return;
                 }
 
-                if(depth == 0)
+                if(depth == 1)
                     return;
 
                 gameStateScore(moveBoardMem, moveBoardMem, score, depth-1, aiLetter, playerLetter, turnLetter == aiLetter ? playerLetter : aiLetter);
