@@ -31,8 +31,8 @@ void DLG_Home::mousePressEvent(QMouseEvent* mouseEvent)
             //Determin board x,y of mouseEvent
             const int xOffset = mouseEvent->pos().x() - Settings::BoardRect.x();
             const int yOffset = mouseEvent->pos().y() - Settings::BoardRect.y();
-            const int x = floor(xOffset/100);
-            const int y = floor(yOffset/100);
+            const int x = floor(xOffset/Settings::TileSize);
+            const int y = floor(yOffset/Settings::TileSize);
 
             //Check if tile already exists in location
             if(m_tiles[x][y]->hasValue())
@@ -128,10 +128,10 @@ void DLG_Home::deleteTiles()
 
 void DLG_Home::createTiles()
 {
-    for(int x = 0; x < 3; x++)
+    for(int x = 0; x < Settings::BoardColRows; x++)
     {
         m_tiles.push_back(QVector<Tile*>());
-        for(int y = 0; y < 3; y++)
+        for(int y = 0; y < Settings::BoardColRows; y++)
         {
             m_tiles[x].push_back(new Tile(this, QPoint(x,y)));
         }
