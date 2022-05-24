@@ -23,22 +23,25 @@ DLG_Home::~DLG_Home()
 
 void DLG_Home::mousePressEvent(QMouseEvent* mouseEvent)
 {
-    //If mouse click in board
-    if(Settings::BoardRect.contains(mouseEvent->pos()))
+    if(!m_bGameOver)
     {
-        //Determin board x,y of mouseEvent
-        const int xOffset = mouseEvent->pos().x() - Settings::BoardRect.x();
-        const int yOffset = mouseEvent->pos().y() - Settings::BoardRect.y();
-        const int x = floor(xOffset/100);
-        const int y = floor(yOffset/100);
-
-        //Check if tile already exists in location
-        if(m_tiles[x][y]->hasValue())
+        //If mouse click in board
+        if(Settings::BoardRect.contains(mouseEvent->pos()))
         {
-            return;
-        }
+            //Determin board x,y of mouseEvent
+            const int xOffset = mouseEvent->pos().x() - Settings::BoardRect.x();
+            const int yOffset = mouseEvent->pos().y() - Settings::BoardRect.y();
+            const int x = floor(xOffset/100);
+            const int y = floor(yOffset/100);
 
-        placeTile(x, y);
+            //Check if tile already exists in location
+            if(m_tiles[x][y]->hasValue())
+            {
+                return;
+            }
+
+            placeTile(x, y);
+        }
     }
 }
 
@@ -58,6 +61,7 @@ void DLG_Home::checkWinner(const int& xLast, const int& yLast)
         m_tiles[xLast][0]->setWin();
         m_tiles[xLast][1]->setWin();
         m_tiles[xLast][2]->setWin();
+        m_bGameOver = true;
         return;
     }
 
@@ -67,6 +71,7 @@ void DLG_Home::checkWinner(const int& xLast, const int& yLast)
         m_tiles[0][yLast]->setWin();
         m_tiles[1][yLast]->setWin();
         m_tiles[2][yLast]->setWin();
+        m_bGameOver = true;
         return;
     }
 
@@ -78,6 +83,7 @@ void DLG_Home::checkWinner(const int& xLast, const int& yLast)
             m_tiles[0][0]->setWin();
             m_tiles[1][1]->setWin();
             m_tiles[2][2]->setWin();
+            m_bGameOver = true;
             return;
         }
     }
@@ -90,6 +96,7 @@ void DLG_Home::checkWinner(const int& xLast, const int& yLast)
             m_tiles[0][2]->setWin();
             m_tiles[1][1]->setWin();
             m_tiles[2][0]->setWin();
+            m_bGameOver = true;
             return;
         }
     }
@@ -98,6 +105,7 @@ void DLG_Home::checkWinner(const int& xLast, const int& yLast)
 void DLG_Home::resetBoard()
 {
     m_bSpawnX = true;
+    m_bGameOver = false;
     for(int x = 0; x < m_tiles.size(); x++)
     {
         for(int y = 0; y < m_tiles[x].size(); y++)

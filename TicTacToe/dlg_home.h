@@ -30,6 +30,7 @@ private:
 
     ///Game control
     bool m_bSpawnX;
+    bool m_bGameOver;
     void placeTile(const int& x, const int& y);
     void checkWinner(const int& xLast, const int& yLast);
 
