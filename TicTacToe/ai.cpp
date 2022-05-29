@@ -86,11 +86,11 @@ QPoint AI::getBestMove(const QVector<QVector<QChar>>& board, const QChar& aiLett
                 float score = 0;
                 if(checkWinner(moveBoardMem, x, y))
                 {
-                    score = 25;
+                    score = Settings::AiSearchDepth * Settings::AiSearchDepth;
                 }
                 else
                 {
-                    gameStateScore(moveBoardMem, score, 5, aiLetter, playerLetter, playerLetter);
+                    gameStateScore(moveBoardMem, score, Settings::AiSearchDepth, aiLetter, playerLetter, playerLetter);
                 }
 
                 if(score > highScore)

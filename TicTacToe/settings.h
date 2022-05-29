@@ -22,6 +22,8 @@ const QColor TileWinTextColor = Qt::red;
 const QChar TileTextX = 'X';
 const QChar TileTextO = 'O';
 const QChar TileTextNull = ' ';
+
+const int AiSearchDepth = 5;
 }
 
 #endif // SETTINGS_H
