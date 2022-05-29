@@ -26,4 +26,6 @@ const QChar TileTextNull = ' ';
 const int AiSearchDepth = 5;
 }
 
+//#define AI_TIMING_TEST
+
 #endif // SETTINGS_H

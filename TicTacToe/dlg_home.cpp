@@ -23,6 +23,20 @@ DLG_Home::~DLG_Home()
 
 void DLG_Home::mousePressEvent(QMouseEvent* mouseEvent)
 {
+#ifdef AI_TIMING_TEST
+            QVector<QVector<QChar>> board = QVector<QVector<QChar>>(m_tiles.size(), QVector<QChar>(m_tiles[0].size(), Settings::TileTextNull));
+
+            clock_t start = clock();
+            board[0][0] = Settings::TileTextX;
+
+            QPoint move = m_ai.getBestMove(board, m_bSpawnX ? Settings::TileTextX : Settings::TileTextO, m_bSpawnX ? Settings::TileTextO : Settings::TileTextX);
+
+            clock_t end = clock();
+            qDebug() << end - start;
+
+            qDebug() << move;
+#endif
+
     if(!m_bGameOver)
     {
         //If mouse click in board
