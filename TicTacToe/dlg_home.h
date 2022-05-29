@@ -32,6 +32,7 @@ private:
     ///Game control
     int m_numMoves;
     bool m_bSpawnX;
+    bool m_bStartAi;
     bool m_bGameOver;
     void placeTile(const int& x, const int& y);
     void checkWinner(const int& xLast, const int& yLast);
@@ -43,5 +44,6 @@ private:
 
     ///AI
     AI m_ai;
+    void doAiMove();
 };
 #endif // DLG_HOME_H

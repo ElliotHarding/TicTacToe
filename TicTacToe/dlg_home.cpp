@@ -10,6 +10,7 @@ DLG_Home::DLG_Home(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::DLG_Home)
     , m_bSpawnX(true)
+    , m_bStartAi(false)
 {
     ui->setupUi(this);
     createTiles();
@@ -24,17 +25,17 @@ DLG_Home::~DLG_Home()
 void DLG_Home::mousePressEvent(QMouseEvent* mouseEvent)
 {
 #ifdef AI_TIMING_TEST
-            QVector<QVector<QChar>> board = QVector<QVector<QChar>>(m_tiles.size(), QVector<QChar>(m_tiles[0].size(), Settings::TileTextNull));
+    QVector<QVector<QChar>> board = QVector<QVector<QChar>>(m_tiles.size(), QVector<QChar>(m_tiles[0].size(), Settings::TileTextNull));
 
-            clock_t start = clock();
-            board[0][0] = Settings::TileTextX;
+    clock_t start = clock();
+    board[0][0] = Settings::TileTextX;
 
-            QPoint move = m_ai.getBestMove(board, m_bSpawnX ? Settings::TileTextX : Settings::TileTextO, m_bSpawnX ? Settings::TileTextO : Settings::TileTextX);
+    QPoint move = m_ai.getBestMove(board, m_bSpawnX ? Settings::TileTextX : Settings::TileTextO, m_bSpawnX ? Settings::TileTextO : Settings::TileTextX);
 
-            clock_t end = clock();
-            qDebug() << end - start;
+    clock_t end = clock();
+    qDebug() << end - start;
 
-            qDebug() << move;
+    qDebug() << move;
 #endif
 
     if(!m_bGameOver)
@@ -59,18 +60,7 @@ void DLG_Home::mousePressEvent(QMouseEvent* mouseEvent)
             if(m_bGameOver)
                 return;
 
-            QVector<QVector<QChar>> board;
-            for(int x = 0; x < m_tiles.size(); x++)
-            {
-                board.push_back(QVector<QChar>());
-                for(int y = 0; y < m_tiles[x].size(); y++)
-                {
-                    board[x].push_back(m_tiles[x][y]->value());
-                }
-            }
-
-            QPoint move = m_ai.getBestMove(board, m_bSpawnX ? Settings::TileTextX : Settings::TileTextO, m_bSpawnX ? Settings::TileTextO : Settings::TileTextX);
-            placeTile(move.x(), move.y());
+            doAiMove();
         }
     }
 }
@@ -141,7 +131,6 @@ void DLG_Home::checkWinner(const int& xLast, const int& yLast)
 void DLG_Home::resetBoard()
 {
     m_numMoves = 0;
-    m_bSpawnX = true;
     m_bGameOver = false;
     for(int x = 0; x < m_tiles.size(); x++)
     {
@@ -149,6 +138,12 @@ void DLG_Home::resetBoard()
         {
             m_tiles[x][y]->reset();
         }
+    }
+
+    m_bStartAi = !m_bStartAi;
+    if(m_bStartAi == true)
+    {
+        doAiMove();
     }
 }
 
@@ -173,6 +168,22 @@ void DLG_Home::createTiles()
             m_tiles[x].push_back(new Tile(this, QPoint(x,y)));
         }
     }
+}
+
+void DLG_Home::doAiMove()
+{
+    QVector<QVector<QChar>> board;
+    for(int x = 0; x < m_tiles.size(); x++)
+    {
+        board.push_back(QVector<QChar>());
+        for(int y = 0; y < m_tiles[x].size(); y++)
+        {
+            board[x].push_back(m_tiles[x][y]->value());
+        }
+    }
+
+    QPoint move = m_ai.getBestMove(board, m_bSpawnX ? Settings::TileTextX : Settings::TileTextO, m_bSpawnX ? Settings::TileTextO : Settings::TileTextX);
+    placeTile(move.x(), move.y());
 }
 
 
