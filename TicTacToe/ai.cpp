@@ -38,7 +38,7 @@ bool checkWinner(const QVector<QVector<QChar>>& board, const int& xLast, const i
     return false;
 }
 
-void gameStateScore(const QVector<QVector<QChar>>& board, float& score, const int& depth, const QChar& aiLetter, const QChar& playerLetter, const QChar& turnLetter)
+void gameStateScore(const QVector<QVector<QChar>>& board, int& score, const int& depth, const QChar& aiLetter, const QChar& playerLetter, const QChar& turnLetter)
 {
     for(int x = 0; x < Settings::BoardColRows; x++)
     {
@@ -52,11 +52,11 @@ void gameStateScore(const QVector<QVector<QChar>>& board, float& score, const in
                 if(checkWinner(moveBoard, x, y))
                 {
                     score += (turnLetter == aiLetter ? 1 : -1) * depth * depth;
-                    return;
+                    continue;
                 }
 
                 if(depth == 1)
-                    return;
+                    continue;
 
                 gameStateScore(moveBoard, score, depth-1, aiLetter, playerLetter, turnLetter == aiLetter ? playerLetter : aiLetter);
             }
@@ -71,7 +71,7 @@ AI::AI()
 QPoint AI::getBestMove(const QVector<QVector<QChar>>& board, const QChar& aiLetter, const QChar& playerLetter)
 {
     QPoint bestMove;
-    float highScore = -9999999;
+    int highScore = -999999;
     QVector<QVector<QChar>> moveBoardMem = board;
 
     for(int x = 0; x < Settings::BoardColRows; x++)
@@ -83,7 +83,7 @@ QPoint AI::getBestMove(const QVector<QVector<QChar>>& board, const QChar& aiLett
                 moveBoardMem = board;
                 moveBoardMem[x][y] = aiLetter;
 
-                float score = 0;
+                int score = 0;
                 if(checkWinner(moveBoardMem, x, y))
                 {
                     score = Settings::AiSearchDepth * Settings::AiSearchDepth;
